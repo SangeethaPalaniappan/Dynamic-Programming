@@ -1,0 +1,22 @@
+# howSum with memoization
+
+def recursive(arr, n, hashmap):
+    if n in hashmap:
+        return hashmap[n]
+    if n == 0:
+        return []
+    if n < 0:
+        return None
+    for i in arr:
+        res = recursive(arr, n - i, hashmap)
+        if n-i not in hashmap:
+            hashmap[n - i] = res
+        if res != None:
+            res.append(i)
+            return res
+    return res        
+print(recursive([5, 3, 4], 7, {}))
+print(recursive([2, 4], 7, {}))
+print(recursive([2, 3], 7, {}))
+print(recursive([2, 3, 5, 4], 8, {}))
+print(recursive([7, 14], 300, {}))
