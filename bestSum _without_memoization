@@ -1,0 +1,22 @@
+# Best Sum without Memoization
+
+def recursive(arr, n):
+    val = None
+    if n == 0:
+        return []
+    if n < 0:
+        return None
+    for i in arr:
+        res = recursive(arr, n - i)
+        if res != None:
+            res.append(i)
+            if val == None or len(val) > len(res):
+               val = res
+            
+    return val        
+
+print(recursive([2, 3, 1], 7))
+print(recursive([2, 4], 7))
+print(recursive([2, 3], 7))
+print(recursive([2, 3, 5, 4], 8))
+print(recursive([7, 14], 300))
