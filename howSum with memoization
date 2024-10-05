@@ -1,22 +1,23 @@
-# howSum with memoization
+# howSum with tabulation
 
-def recursive(arr, n, hashmap):
-    if n in hashmap:
-        return hashmap[n]
-    if n == 0:
+def fun(tot, target, arr, res, hashmap):
+    if tot in hashmap:
+        return hashmap[tot]
+    if tot == target:
         return []
-    if n < 0:
+    if tot > target:
         return None
-    for i in arr:
-        res = recursive(arr, n - i, hashmap)
-        if n-i not in hashmap:
-            hashmap[n - i] = res
+    res = 0
+    for i in range(len(arr)):
+        res = fun(tot + arr[i], target, arr, res, hashmap)
+        hashmap[tot + arr[i]] = res
         if res != None:
-            res.append(i)
+            res.append(arr[i])
             return res
-    return res        
-print(recursive([5, 3, 4], 7, {}))
-print(recursive([2, 4], 7, {}))
-print(recursive([2, 3], 7, {}))
-print(recursive([2, 3, 5, 4], 8, {}))
-print(recursive([7, 14], 300, {}))
+    return res
+ans = fun(0, 300, [7,14], 0, {})
+print(ans)
+print(fun(0, 7, [2, 4], 0, {})) # false
+print(fun(0, 7, [2, 3], 0, {})) # true
+print(fun(0, 8, [2, 3, 5, 4], 0, {})) # true
+print(fun(0, 300, [7, 14], 0, {})) # false
