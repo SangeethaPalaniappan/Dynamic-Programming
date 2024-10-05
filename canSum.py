@@ -1,28 +1,22 @@
-# CanSum
-from datetime import datetime
-arr = [2,4]
-targetSum = 7
-def recursive(arr, n, hashmap):
-    if n in hashmap:
-        return hashmap[n]
-    if n == 0:
+# CanSum with tabulation
+
+def fun(tot, target, arr, res, hashmap):
+    if tot in hashmap:
+        return hashmap[tot]
+    if tot == target:
         return 1
-    if n < 0:
+    if tot > target:
         return 0
-    for i in arr:
-        #print(i)
-        n = n - i
-        #print(n)
-        res = recursive(arr, n, hashmap)
-        if n not in hashmap:
-            hashmap[n] = res
+    res = 0
+    for i in range(len(arr)):
+        res = fun(tot + arr[i], target, arr, res, hashmap)
+        hashmap[tot + arr[i]] = res
         if res == 1:
-            return res
-    return 0
-start = datetime.now()          
-print(recursive([2, 4], 7, {}))
-print(recursive([2, 3], 7, {}))
-print(recursive([2, 3, 5, 4], 8, {}))
-print(recursive([7, 14], 300, {}))
-end = datetime.now()          
-print(end - start)    
+            return 1
+    return res
+ans = fun(0, 300, [7,14], 0, {})
+print(ans)
+print(fun(0, 7, [2, 4], 0, {})) # false
+print(fun(0, 7, [2, 3], 0, {})) # true
+print(fun(0, 8, [2, 3, 5, 4], 0, {})) # true
+print(fun(0, 300, [7, 14], 0, {})) # false
